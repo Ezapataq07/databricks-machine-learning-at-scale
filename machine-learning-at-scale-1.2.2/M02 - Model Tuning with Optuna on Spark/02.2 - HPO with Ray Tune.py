@@ -342,7 +342,7 @@ with mlflow.start_run(run_name="ray_tune", experiment_id=experiment_id_ray) as p
         ),
         tune_config=tune.TuneConfig(
             search_alg=algo,
-            num_samples=10,
+            num_samples=30,
             reuse_actors=True  # Keeps actors alive for efficiency
         ),
         param_space=search_space
@@ -422,9 +422,7 @@ ray.shutdown()
 
 # MAGIC %md
 # MAGIC
-# MAGIC &copy; 2025 Databricks, Inc. All rights reserved.<br/>
-# MAGIC Apache, Apache Spark, Spark and the Spark logo are trademarks of the 
-# MAGIC <a href="https://www.apache.org/">Apache Software Foundation</a>.<br/>
-# MAGIC <br/><a href="https://databricks.com/privacy-policy">Privacy Policy</a> | 
-# MAGIC <a href="https://databricks.com/terms-of-use">Terms of Use</a> | 
-# MAGIC <a href="https://help.databricks.com/">Support</a>
+# MAGIC &copy; 2025 Databricks, Inc. All rights reserved. Apache, Apache Spark, Spark, the Spark Logo, Apache Iceberg, Iceberg, and the Apache Iceberg logo are trademarks of the <a href="https://www.apache.org/" target="blank">Apache Software Foundation</a>.<br/>
+# MAGIC <br/><a href="https://databricks.com/privacy-policy" target="blank">Privacy Policy</a> | 
+# MAGIC <a href="https://databricks.com/terms-of-use" target="blank">Terms of Use</a> | 
+# MAGIC <a href="https://help.databricks.com/" target="blank">Support</a>
