@@ -209,8 +209,8 @@ class ObjectiveOptuna:
             model = RandomForestRegressor(
                 featuresCol="features",
                 labelCol=self.label_column,
-                numTrees=trial.suggest_int("num_trees", 2, 5, log=True),
-                maxDepth=trial.suggest_int("max_depth", 3, 10),
+                numTrees=trial.suggest_int("num_trees", 5, 20, log=True),
+                maxDepth=trial.suggest_int("max_depth", 3, 20),
                 minInstancesPerNode=trial.suggest_int("min_instances_per_node", 1, 10)
             )
 
@@ -219,8 +219,8 @@ class ObjectiveOptuna:
             model = GBTRegressor(
                 featuresCol="features",
                 labelCol=self.label_column,
-                maxDepth=trial.suggest_int("max_depth", 3, 10),
-                maxIter=trial.suggest_int("n_estimators", 2, 5, log=True),
+                maxDepth=trial.suggest_int("max_depth", 3, 20),
+                maxIter=trial.suggest_int("n_estimators", 5, 20, log=True),
                 stepSize=trial.suggest_float("learning_rate", 0.01, 0.5)
             )
 
@@ -343,10 +343,14 @@ mlflow.autolog(log_models=False, disable=True)
 
 # Invoke Optuna training function on the driver node
 single_node_study = optuna_hpo_fn(
-    n_trials=10,
+    n_trials=30,
     experiment_id=experiment_id_spark,
     optuna_sampler=optuna_sampler
 )
+
+# COMMAND ----------
+
+train_df.count()
 
 # COMMAND ----------
 
@@ -663,7 +667,7 @@ with mlflow.start_run(run_name="parallel_spark_training_hyperopt", experiment_id
     fn=train_with_hyperopt,
     space=space,
     algo=algo,
-    max_evals=8
+    max_evals=20
   )
 
 # COMMAND ----------
@@ -699,6 +703,10 @@ print(f"On the test data, the initial (untuned) model achieved RMSE = {initial_m
 
 # COMMAND ----------
 
+experiment_name_Hyperopt
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Conclusion
 # MAGIC
@@ -724,9 +732,7 @@ print(f"On the test data, the initial (untuned) model achieved RMSE = {initial_m
 
 # MAGIC %md
 # MAGIC
-# MAGIC &copy; 2025 Databricks, Inc. All rights reserved.<br/>
-# MAGIC Apache, Apache Spark, Spark and the Spark logo are trademarks of the 
-# MAGIC <a href="https://www.apache.org/">Apache Software Foundation</a>.<br/>
-# MAGIC <br/><a href="https://databricks.com/privacy-policy">Privacy Policy</a> | 
-# MAGIC <a href="https://databricks.com/terms-of-use">Terms of Use</a> | 
-# MAGIC <a href="https://help.databricks.com/">Support</a>
+# MAGIC &copy; 2025 Databricks, Inc. All rights reserved. Apache, Apache Spark, Spark, the Spark Logo, Apache Iceberg, Iceberg, and the Apache Iceberg logo are trademarks of the <a href="https://www.apache.org/" target="blank">Apache Software Foundation</a>.<br/>
+# MAGIC <br/><a href="https://databricks.com/privacy-policy" target="blank">Privacy Policy</a> | 
+# MAGIC <a href="https://databricks.com/terms-of-use" target="blank">Terms of Use</a> | 
+# MAGIC <a href="https://help.databricks.com/" target="blank">Support</a>
