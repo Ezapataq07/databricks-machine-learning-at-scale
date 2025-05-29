@@ -88,8 +88,9 @@ print(f"Dataset Location:  {DA.paths.datasets.wine_quality}")
 from sklearn.model_selection import train_test_split
 from pyspark.ml.feature import VectorAssembler
 # Load the large Wine Quality dataset from the new Delta table
-data_path = f"{DA.paths.working_dir}/v01/large_wine_quality_delta"
+data_path = f"/Volumes/dbacademy_wine_quality/v01/data"
 df = spark.read.format("delta").load(data_path)
+df = df.union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df).union(df)
 # Define feature columns
 feature_columns = [
     "fixed_acidity", "volatile_acidity", "citric_acid", "residual_sugar", 
@@ -177,7 +178,7 @@ import mlflow
 import time
 
 # Set the active experiment
-mlflow.set_experiment(f"/Users/{DA.username}/Model_Deployment_with_Spark")
+mlflow.set_experiment(f"/Workspace/Users/labuser10422672_1748525923@vocareum.com/machine-learning-at-scale-1.2.2/M03 - Model Deployment with Spark/ModelDeploymentSpark_2")
 
 # Train a Decision Tree model using Scikit-learn
 model = DecisionTreeRegressor(max_depth=5, random_state=42)
@@ -336,7 +337,7 @@ predictions = df_with_features.withColumn(
 display(predictions.select(*feature_columns, "quality", "predicted_quality"))
 
 # Saving predictions to a Delta table:
-predictions.write.format("delta").mode("overwrite").saveAsTable(f"{DA.catalog_name}.{DA.schema_name}.single_node_udf_predictions")
+predictions.write.format("delta").mode("overwrite").saveAsTable(f"dbacademy.labuser10422672_1748525923.single_node_udf_predictions")
 
 # COMMAND ----------
 
@@ -369,7 +370,7 @@ predictions_dt = dt_model.transform(test_df)
 display(predictions_dt.select("features", "quality", "prediction"))
 
 # Save predictions to a Delta table in Unity Catalog
-predictions_dt.write.format("delta").mode("overwrite").saveAsTable(f"{DA.catalog_name}.{DA.schema_name}.distributed_predictions_table")
+predictions_dt.write.format("delta").mode("overwrite").saveAsTable(f"dbacademy.labuser10422672_1748525923.distributed_predictions_table")
 
 # COMMAND ----------
 
@@ -382,9 +383,7 @@ predictions_dt.write.format("delta").mode("overwrite").saveAsTable(f"{DA.catalog
 
 # MAGIC %md
 # MAGIC
-# MAGIC &copy; 2025 Databricks, Inc. All rights reserved.<br/>
-# MAGIC Apache, Apache Spark, Spark and the Spark logo are trademarks of the 
-# MAGIC <a href="https://www.apache.org/">Apache Software Foundation</a>.<br/>
-# MAGIC <br/><a href="https://databricks.com/privacy-policy">Privacy Policy</a> | 
-# MAGIC <a href="https://databricks.com/terms-of-use">Terms of Use</a> | 
-# MAGIC <a href="https://help.databricks.com/">Support</a>
+# MAGIC &copy; 2025 Databricks, Inc. All rights reserved. Apache, Apache Spark, Spark, the Spark Logo, Apache Iceberg, Iceberg, and the Apache Iceberg logo are trademarks of the <a href="https://www.apache.org/" target="blank">Apache Software Foundation</a>.<br/>
+# MAGIC <br/><a href="https://databricks.com/privacy-policy" target="blank">Privacy Policy</a> | 
+# MAGIC <a href="https://databricks.com/terms-of-use" target="blank">Terms of Use</a> | 
+# MAGIC <a href="https://help.databricks.com/" target="blank">Support</a>
